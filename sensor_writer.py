@@ -30,3 +30,6 @@ def writeCsv( now, humidity, temperature, max_range_temperature, min_range_tempe
 def writeGoogleSpreadSheet( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity):
     print("TODO:WIRTE GOOGOLE SPREADSHEET")
 
+if __name__ == '__main__':
+    main()
+# [END]
