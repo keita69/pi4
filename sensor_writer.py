@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-                                                                                                                               
-# refarence
-# https://qiita.com/Taroi_Japanista/items/ac51ca2f636f422cced6
-import os
-import Adafruit_DHT
-import datetime
 
 # Google Spreadsheet
 # ref
@@ -15,6 +10,13 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+
+# refarence
+# https://qiita.com/Taroi_Japanista/items/ac51ca2f636f422cced6
+import os
+import Adafruit_DHT
+import datetime
+
 
 def main():
     now = datetime.datetime.now() # 現在の日時を取得
@@ -48,7 +50,7 @@ def writeGoogleSpreadSheet( now, humidity, temperature, max_range_temperature, m
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
     # The ID and range of a sample spreadsheet.
-    SPREADSHEET_ID = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    SPREADSHEET_ID = '1fd3vQUKMGdUDyzuTNviPYf6x8GvGA77V6eaJ-jE0oAo'
      
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
