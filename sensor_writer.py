@@ -3,6 +3,7 @@
 # Google Spreadsheet
 # ref
 # https://qiita.com/connvoi_tyou/items/7cd7ffd5a98f61855f5c
+# https://www.kumilog.net/entry/2018/03/22/090000#%E3%82%B9%E3%83%97%E3%83%AC%E3%83%83%E3%83%89%E3%82%B7%E3%83%BC%E3%83%88%E3%81%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%82%80
 # pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 from __future__ import print_function
 import pickle
@@ -17,6 +18,7 @@ import os
 import Adafruit_DHT
 import datetime
 
+import google_spreadsheet_writer
 
 def main():
     now = datetime.datetime.now() # 現在の日時を取得
@@ -32,6 +34,9 @@ def main():
     
     writeGoogleSpreadSheet( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity)
 
+    google_spreadsheet_writer.write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity)
+
+
 def getHumidiyTEmperatureFromDHT22():
     sensor = Adafruit_DHT.DHT22
     pin = 4
@@ -46,12 +51,13 @@ def writeCsv( now, humidity, temperature, max_range_temperature, min_range_tempe
 def writeGoogleSpreadSheet( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity):
     print("TODO:WIRTE GOOGOLE SPREADSHEET")
 
+    print(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity)
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
     # The ID and range of a sample spreadsheet.
-    SPREADSHEET_ID = '1fd3vQUKMGdUDyzuTNviPYf6x8GvGA77V6eaJ-jE0oAo'
-     
+    SPREADSHEET_ID = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA'     
+
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -87,6 +93,7 @@ def writeGoogleSpreadSheet( now, humidity, temperature, max_range_temperature, m
             spreadsheetId=SPREADSHEET_ID, range=sheetName + "!" + rangeName,
             valueInputOption=ValueInputOption, body=body).execute()
         # TODO add judge result
+        pprint(result)
 
 if __name__ == '__main__':
     main()
