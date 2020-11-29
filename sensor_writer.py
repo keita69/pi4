@@ -19,6 +19,7 @@ import Adafruit_DHT
 import datetime
 
 import google_spreadsheet_writer
+import line_notify
 
 def main():
     now = datetime.datetime.now() # 現在の日時を取得
@@ -36,6 +37,8 @@ def main():
 
     google_spreadsheet_writer.write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity)
 
+    line_notify.notify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity)
+
 
 def getHumidiyTEmperatureFromDHT22():
     sensor = Adafruit_DHT.DHT22
@@ -49,9 +52,7 @@ def writeCsv( now, humidity, temperature, max_range_temperature, min_range_tempe
     file.write('{0:%Y/%m/%d %H:%M:%S}, {1:3f}, {2:3f}, {3:3f}, {4:3f}, {5:3f}, {6:3f}\n'.format(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity))
 
 def writeGoogleSpreadSheet( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity):
-    print("TODO:WIRTE GOOGOLE SPREADSHEET")
 
-    print(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity)
     # If modifying these scopes, delete the file token.pickle.
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
