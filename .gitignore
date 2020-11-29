@@ -1,4 +1,4 @@
-clientID_key.txt
-credentials.json
 token.pickle
-__pycache__/*
+secrets.ini
+__pycache__
+credentials.jsoncredentials.json
