@@ -2,3 +2,4 @@ token.pickle
 secrets.ini
 __pycache__
 credentials.json
+*.log
