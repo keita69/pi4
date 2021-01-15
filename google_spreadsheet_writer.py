@@ -20,6 +20,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
+
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -28,6 +29,29 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 spreadsheetId = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA' 
 # RANGE_NAME = 'A1:C1'
 # ValueInputOption = 'USER_ENTERED'
+
+def deleteFirstAndSecondRows():
+    # https://developers.google.com/sheets/api/samples/rowcolumn
+
+    # XXXXXXXXXX
+    sheetName = '温度と湿度'
+    rangeName = 'A:G'
+    ValueInputOption = 'USER_ENTERED'
+    body = {
+      "requests": [
+        {
+          "deleteDimension": {
+            "range": {
+              "sheetId": 0, # gid of google spreadsheet url 
+              "dimension": "ROWS",
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          }
+        },
+      ],
+    }
+    response=getService().spreadsheets().batchUpdate(spreadsheetId=spreadsheetId, body=body).execute()
 
 def getService():
     """Shows basic usage of the Sheets API.
@@ -84,6 +108,7 @@ def write( now, humidity, temperature, max_range_temperature, min_range_temperat
 #            # Print columns A and E, which correspond to indices 0 and 4.
 #            print('%s, %s' % (row[0], row[4]))
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    deleteFirstAndSecondRows()
+
 # [END sheets_quickstart]
