@@ -29,9 +29,7 @@ spreadsheetId = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA'
 # RANGE_NAME = 'A1:C1'
 # ValueInputOption = 'USER_ENTERED'
 
-def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity ):
-    nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
-# def main():
+def getService():
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -55,6 +53,11 @@ def write( now, humidity, temperature, max_range_temperature, min_range_temperat
             pickle.dump(creds, token)
 
     service = build('sheets', 'v4', credentials=creds)
+    return service
+
+
+def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity ):
+    nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
 
     # XXXXXXXXXX
     sheetName = '温度と湿度'
@@ -63,7 +66,7 @@ def write( now, humidity, temperature, max_range_temperature, min_range_temperat
     body = {
         'values': [[nowstr, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity]],
     }
-    result = service.spreadsheets().values().append(
+    result = getService().spreadsheets().values().append(
         spreadsheetId=spreadsheetId, range=sheetName + "!" + rangeName,
         valueInputOption=ValueInputOption, body=body).execute()
 
