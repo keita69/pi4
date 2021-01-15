@@ -30,6 +30,19 @@ spreadsheetId = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA'
 # RANGE_NAME = 'A1:C1'
 # ValueInputOption = 'USER_ENTERED'
 
+def isOver1440Rows():
+    range_ = "A1441:A1441"
+    request = getService().spreadsheets().values().get(spreadsheetId=spreadsheetId, range=range_)
+    response = request.execute()   
+    print(response)
+
+    if 'valuses' in response :
+        # not value of A1441:A1441
+        return False
+    else :
+        print("FALSE")
+        return True
+
 def deleteFirstAndSecondRows():
     # https://developers.google.com/sheets/api/samples/rowcolumn
 
@@ -81,6 +94,10 @@ def getService():
 
 
 def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity ):
+    
+    if isOver1440Rows() :
+        deleteFirstAndSecondRows()
+
     nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
 
     # XXXXXXXXXX
@@ -108,7 +125,8 @@ def write( now, humidity, temperature, max_range_temperature, min_range_temperat
 #            # Print columns A and E, which correspond to indices 0 and 4.
 #            print('%s, %s' % (row[0], row[4]))
 
-if __name__ == '__main__':
-    deleteFirstAndSecondRows()
+#if __name__ == '__main__':
+    #deleteFirstAndSecondRows()
+    #isOver1440Rows()
 
 # [END sheets_quickstart]
