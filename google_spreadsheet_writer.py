@@ -31,16 +31,14 @@ spreadsheetId = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA'
 # ValueInputOption = 'USER_ENTERED'
 
 def isOver1440Rows():
-    range_ = "A1441:A1441"
+    range_ = "'温度と湿度'!A1441:A1441"
     request = getService().spreadsheets().values().get(spreadsheetId=spreadsheetId, range=range_)
     response = request.execute()   
-    print(response)
 
-    if 'valuses' in response :
+    if 'values' in response :
         # not value of A1441:A1441
         return False
     else :
-        print("FALSE")
         return True
 
 def deleteFirstAndSecondRows():
@@ -95,8 +93,8 @@ def getService():
 
 def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity ):
     
-    if isOver1440Rows() :
-        deleteFirstAndSecondRows()
+#   if isOver1440Rows() :
+#       deleteFirstAndSecondRows()
 
     nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
 
