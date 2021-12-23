@@ -34,15 +34,19 @@ def isOver1440Rows():
     range_ = "'温度と湿度'!A1441:A1441"
     request = getService().spreadsheets().values().get(spreadsheetId=spreadsheetId, range=range_)
     response = request.execute()   
-
     if 'values' in response :
         # not value of A1441:A1441
-        return False
-    else :
+        print("isOver1440 is True")
+        print(response)
         return True
+    else :
+        print("isOver1440 is False")
+        print(response)
+        return False
 
 def deleteFirstAndSecondRows():
     # https://developers.google.com/sheets/api/samples/rowcolumn
+    print("deleteFirstAndSecondRows start ")
 
     # XXXXXXXXXX
     sheetName = '温度と湿度'
@@ -93,8 +97,8 @@ def getService():
 
 def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity ):
     
-#   if isOver1440Rows() :
-#       deleteFirstAndSecondRows()
+    if isOver1440Rows() :
+        deleteFirstAndSecondRows()
 
     nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
 
