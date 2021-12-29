@@ -25,8 +25,6 @@ def main():
     now = datetime.datetime.now() # 現在の日時を取得
     # --- BME280
     temperature, pressure, humidity = bme280.readData()
-    print(now)
-    print(temperature)
 
     max_range_temperature = 28.0
     min_range_temperature = 20.0
