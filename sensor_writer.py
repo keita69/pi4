@@ -20,12 +20,14 @@ import google_spreadsheet_writer
 import line_notify
 #import disp_oled
 import bme280
+import mh_z19b
 
 def main():
     now = datetime.datetime.now() # 現在の日時を取得
     # --- BME280
     temperature, pressure, humidity = bme280.readData()
-
+    co2 = mh_z19b.getCo2()
+    print("CO2:" + str(co2) + " ppm")
     max_range_temperature = 28.0
     min_range_temperature = 20.0
 
