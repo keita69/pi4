@@ -18,7 +18,7 @@ import datetime
 
 import google_spreadsheet_writer
 import line_notify
-import disp_oled
+#import disp_oled
 import bme280
 
 def main():
