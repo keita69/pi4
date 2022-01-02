@@ -50,7 +50,7 @@ def deleteFirstAndSecondRows():
 
     # XXXXXXXXXX
     sheetName = '温度と湿度'
-    rangeName = 'A:G'
+    rangeName = 'A:H'
     ValueInputOption = 'USER_ENTERED'
     body = {
       "requests": [
@@ -95,7 +95,7 @@ def getService():
     return service
 
 
-def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure ):
+def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2 ):
     
     if isOver1440Rows() :
         deleteFirstAndSecondRows()
@@ -107,7 +107,7 @@ def write( now, humidity, temperature, max_range_temperature, min_range_temperat
     rangeName = 'A:H'
     ValueInputOption = 'USER_ENTERED'
     body = {
-        'values': [[nowstr, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure]],
+        'values': [[nowstr, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2]],
     }
     result = getService().spreadsheets().values().append(
         spreadsheetId=spreadsheetId, range=sheetName + "!" + rangeName,

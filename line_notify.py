@@ -2,7 +2,7 @@ import requests
 import configparser
  
 
-def checkLineNotify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure):
+def checkLineNotify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
 
     message = 'good condition!'
     is_line_notify = True
@@ -12,9 +12,9 @@ def checkLineNotify( now, humidity, temperature, max_range_temperature, min_rang
         is_line_notify = False
 
     if min_range_temperature > temperature :
-        message = 'TOO COOL!! \n[{0} c] [{1} %] [{2} hPa]'.format('{:.1f}'.format(temperature), '{:.1f}'.format(humidity), '{:.1f}'.format(pressure))
+        message = 'TOO COOL!! \n[{0} c] [{1} %] [{2} hPa] [{3} ppm]'.format('{:.1f}'.format(temperature), '{:.1f}'.format(humidity), '{:.1f}'.format(pressure), '{:.1f}'.format(co2))
     elif temperature > max_range_temperature :
-        message = 'TOO HOT!! \n[{0} c] [{1} %] [{2} hPa]'.format('{:.1f}'.format(temperature), '{:.1f}'.format(humidity), '{:.1f}'.format(pressure))
+        message = 'TOO HOT!! \n[{0} c] [{1} %] [{2} hPa] [{3} ppm]'.format('{:.1f}'.format(temperature), '{:.1f}'.format(humidity), '{:.1f}'.format(pressure), '{:.1f}'.format(co2))
 
     path_w = 'line_notify_write_last_time.txt'
 
@@ -23,8 +23,6 @@ def checkLineNotify( now, humidity, temperature, max_range_temperature, min_rang
         lastTime = f.read()
 
     
-    #TODO if 15分以内であれば通知しない
-
     #is_line_notify = True
     print('{0} [{1} c] [{2} %] [{4} hPa] [{3}]'.format(now, temperature, humidity, is_line_notify, pressure))
 
@@ -37,7 +35,7 @@ def checkLineNotify( now, humidity, temperature, max_range_temperature, min_rang
 
 
 
-def notify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure):
+def notify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
     config = configparser.ConfigParser()
     config.read('secrets.ini')
      
@@ -46,7 +44,7 @@ def notify( now, humidity, temperature, max_range_temperature, min_range_tempera
     url = "https://notify-api.line.me/api/notify"
     headers = {'Authorization': 'Bearer ' + access_token}
 
-    judge, message =  checkLineNotify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure)
+    judge, message =  checkLineNotify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
 
     if judge :
         payload = {'message': message}
