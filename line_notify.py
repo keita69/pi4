@@ -51,10 +51,11 @@ def notify( now, humidity, temperature, max_range_temperature, min_range_tempera
         r = requests.post(url, headers=headers, params=payload,)
 
 
-def notify( now, co2):
+def notify_for_co2( now, co2):
     message = None
-    if co2 > 1000 :
-        message = '{0} Please ventulate !! [CO2:{1}]'.format(now, co2)
+    max_limit = 1000
+    if co2 > max_limit :
+        message = 'Please ventulate !! \n[CO2: {0} ppm (> {1} ppm)]'.format(co2, max_limit)
     else :
         return 
     
@@ -68,3 +69,4 @@ def notify( now, co2):
 
     payload = {'message': message}
     r = requests.post(url, headers=headers, params=payload,)
+
