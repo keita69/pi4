@@ -26,23 +26,26 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
 # SPREADSHEET_ID = '1fd3vQUKMGdUDyzuTNviPYf6x8GvGA77V6eaJ-jE0oAo'
-spreadsheetId = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA' 
+spreadsheetId = '1Ji2PrvuhPHWHu0K-fGaxgCvqSV8vd2AkqJDYCPcrjkA'
 # RANGE_NAME = 'A1:C1'
 # ValueInputOption = 'USER_ENTERED'
 
+
 def isOver1440Rows():
     range_ = "'温度と湿度'!A1441:A1441"
-    request = getService().spreadsheets().values().get(spreadsheetId=spreadsheetId, range=range_)
-    response = request.execute()   
-    if 'values' in response :
+    request = getService().spreadsheets().values().get(
+        spreadsheetId=spreadsheetId, range=range_)
+    response = request.execute()
+    if 'values' in response:
         # not value of A1441:A1441
         print("isOver1440 is True")
         print(response)
         return True
-    else :
+    else:
         print("isOver1440 is False")
         print(response)
         return False
+
 
 def deleteFirstAndSecondRows():
     # https://developers.google.com/sheets/api/samples/rowcolumn
@@ -53,20 +56,22 @@ def deleteFirstAndSecondRows():
     rangeName = 'A:H'
     ValueInputOption = 'USER_ENTERED'
     body = {
-      "requests": [
-        {
-          "deleteDimension": {
-            "range": {
-              "sheetId": 0, # gid of google spreadsheet url 
-              "dimension": "ROWS",
-              "startIndex": 1,
-              "endIndex": 3
-            }
-          }
-        },
-      ],
+        "requests": [
+            {
+                "deleteDimension": {
+                    "range": {
+                        "sheetId": 0,  # gid of google spreadsheet url
+                        "dimension": "ROWS",
+                        "startIndex": 1,
+                        "endIndex": 3
+                    }
+                }
+            },
+        ],
     }
-    response=getService().spreadsheets().batchUpdate(spreadsheetId=spreadsheetId, body=body).execute()
+    response = getService().spreadsheets().batchUpdate(
+        spreadsheetId=spreadsheetId, body=body).execute()
+
 
 def getService():
     """Shows basic usage of the Sheets API.
@@ -95,9 +100,9 @@ def getService():
     return service
 
 
-def write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2 ):
-    
-    if isOver1440Rows() :
+def write(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
+
+    if isOver1440Rows():
         deleteFirstAndSecondRows()
 
     nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
@@ -127,8 +132,8 @@ def write( now, humidity, temperature, max_range_temperature, min_range_temperat
 #            # Print columns A and E, which correspond to indices 0 and 4.
 #            print('%s, %s' % (row[0], row[4]))
 
-#if __name__ == '__main__':
-    #deleteFirstAndSecondRows()
-    #isOver1440Rows()
+# if __name__ == '__main__':
+    # deleteFirstAndSecondRows()
+    # isOver1440Rows()
 
 # [END sheets_quickstart]

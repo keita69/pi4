@@ -154,3 +154,6 @@ ls /usr/share/fonts/opentype/noto/
 # MH-Z19B CO2濃度定
 https://dev.classmethod.jp/articles/raspberry-pi-4-b-mh-z19b-co2/
 
+# Python Lint  
+https://qiita.com/genbu-jp/items/723b619013dc86008acc
+https://qiita.com/psychoroid/items/2c2acc06c900d2c0c8cb

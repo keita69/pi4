@@ -1,3 +1,4 @@
+.VSCODE
 token.pickle
 secrets.ini
 __pycache__

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-                                                                                                                               
+# -*- coding: utf-8 -*-
 # Google Spreadsheet
 # ref
 # https://qiita.com/connvoi_tyou/items/7cd7ffd5a98f61855f5c
@@ -18,12 +18,13 @@ import datetime
 
 import google_spreadsheet_writer
 import line_notify
-#import disp_oled
+# import disp_oled
 import bme280
 import mh_z19b
 
+
 def main():
-    now = datetime.datetime.now() # 現在の日時を取得
+    now = datetime.datetime.now()  # 現在の日時を取得
     # --- BME280
     temperature, pressure, humidity = bme280.readData()
     co2 = mh_z19b.getCo2()
@@ -34,18 +35,24 @@ def main():
     max_range_humidity = 70.0
     min_range_humidity = 40.0
 
-    writeCsv( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
+    writeCsv(now, humidity, temperature, max_range_temperature,
+             min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
 
-    google_spreadsheet_writer.write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
+    google_spreadsheet_writer.write(now, humidity, temperature, max_range_temperature,
+                                    min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
 
-    line_notify.notify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
-    line_notify.notify_for_co2( now, co2)
+    line_notify.notify(now, humidity, temperature, max_range_temperature,
+                       min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
+    line_notify.notify_for_co2(now, co2)
 
 #   disp_oled.disp( now, temperature)
 
-def writeCsv( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
-    file = open('sensor_log.csv', 'a+')  #書き込みモードでオープン  
-    file.write('{0:%Y/%m/%d %H:%M:%S}, {1:3f}, {2:3f}, {3:3f}, {4:3f}, {5:3f}, {6:3f}, {7:3f}, {8:3f}\n'.format(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2))
+
+def writeCsv(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
+    file = open('sensor_log.csv', 'a+')  # 書き込みモードでオープン
+    file.write('{0:%Y/%m/%d %H:%M:%S}, {1:3f}, {2:3f}, {3:3f}, {4:3f}, {5:3f}, {6:3f}, {7:3f}, {8:3f}\n'.format(now, humidity,
+               temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2))
+
 
 if __name__ == '__main__':
     main()

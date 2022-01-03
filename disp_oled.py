@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
 
 
-def disp( now, temperature):
+def disp(now, temperature):
     i2c = board.I2C()
     oled = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c, addr=0x3c)
 
@@ -17,12 +17,14 @@ def disp( now, temperature):
     image = Image.new("1", (oled.width, oled.height))
     draw = ImageDraw.Draw(image)
 
-    # font 
+    # font
 
-    #font = ImageFont.truetype("/usr/share/fonts/opentype/noto/NotoSansCJK-DemiLight.ttc", 13)
-    #font2 = ImageFont.truetype("/usr/share/fonts/opentype/noto/NotoSansCJK-DemiLight.ttc", 10)
-    font = ImageFont.truetype("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", 20)
-    font2 = ImageFont.truetype("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", 12)
+    # font = ImageFont.truetype("/usr/share/fonts/opentype/noto/NotoSansCJK-DemiLight.ttc", 13)
+    # font2 = ImageFont.truetype("/usr/share/fonts/opentype/noto/NotoSansCJK-DemiLight.ttc", 10)
+    font = ImageFont.truetype(
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", 20)
+    font2 = ImageFont.truetype(
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", 12)
 
     # ex) '2021-12-08 11:42:33'
     mmdd = str(now)[5:10]
@@ -39,5 +41,3 @@ def disp( now, temperature):
     # Display image
     oled.image(image)
     oled.show()
-
-
