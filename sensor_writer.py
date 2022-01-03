@@ -39,6 +39,7 @@ def main():
     google_spreadsheet_writer.write( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
 
     line_notify.notify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
+    line_notify.notify( now, co2)
 
 #   disp_oled.disp( now, temperature)
 

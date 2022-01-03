@@ -3,7 +3,7 @@ import configparser
  
 
 def checkLineNotify( now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
-
+    
     message = 'good condition!'
     is_line_notify = True
 
@@ -50,3 +50,21 @@ def notify( now, humidity, temperature, max_range_temperature, min_range_tempera
         payload = {'message': message}
         r = requests.post(url, headers=headers, params=payload,)
 
+
+def notify( now, co2):
+    message = None
+    if co2 > 1000 :
+        message = '{0} Please ventulate !! [CO2:{1}]'.format(now, co2)
+    else :
+        return 
+    
+    config = configparser.ConfigParser()
+    config.read('secrets.ini')
+     
+    access_token = config.get('co2', 'access_token') 
+    
+    url = "https://notify-api.line.me/api/notify"
+    headers = {'Authorization': 'Bearer ' + access_token}
+
+    payload = {'message': message}
+    r = requests.post(url, headers=headers, params=payload,)
