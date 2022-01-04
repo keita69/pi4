@@ -21,37 +21,29 @@ import line_notify
 # import disp_oled
 import bme280
 import mh_z19b
-
+import sensor_class
 
 def main():
+
     now = datetime.datetime.now()  # 現在の日時を取得
     # --- BME280
     temperature, pressure, humidity = bme280.readData()
     co2 = mh_z19b.getCo2()
-    print("CO2:" + str(co2) + " ppm")
-    max_range_temperature = 28.0
-    min_range_temperature = 20.0
 
-    max_range_humidity = 70.0
-    min_range_humidity = 40.0
+    sensor = sensor_class.Sensor(now, humidity, temperature, pressure, co2)
 
-    writeCsv(now, humidity, temperature, max_range_temperature,
-             min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
-
-    google_spreadsheet_writer.write(now, humidity, temperature, max_range_temperature,
-                                    min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
-
-    line_notify.notify(now, humidity, temperature, max_range_temperature,
-                       min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2)
-    line_notify.notify_for_co2(now, co2)
+    writeCsv(sensor)
+    google_spreadsheet_writer.write(sensor)
+    line_notify.notify(sensor)
+    line_notify.notify_for_co2(sensor)
 
 #   disp_oled.disp( now, temperature)
 
 
-def writeCsv(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
+def writeCsv(s:sensor_class.Sensor):
     file = open('sensor_log.csv', 'a+')  # 書き込みモードでオープン
-    file.write('{0:%Y/%m/%d %H:%M:%S}, {1:3f}, {2:3f}, {3:3f}, {4:3f}, {5:3f}, {6:3f}, {7:3f}, {8:3f}\n'.format(now, humidity,
-               temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2))
+    file.write('{0:%Y/%m/%d %H:%M:%S}, {1:3f}, {2:3f}, {3:3f}, {4:3f}, {5:3f}, {6:3f}, {7:3f}, {8:3f}\n'.format(s.now, s.humidity,
+               s.temperature, s.max_range_temperature, s.min_range_temperature, s.max_range_humidity, s.min_range_humidity, s.pressure, s.co2))
 
 
 if __name__ == '__main__':

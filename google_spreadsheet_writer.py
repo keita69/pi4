@@ -16,10 +16,10 @@
 from __future__ import print_function
 import pickle
 import os.path
+import sensor_class
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -100,19 +100,19 @@ def getService():
     return service
 
 
-def write(now, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2):
+def write(s:sensor_class.Sensor):
 
     if isOver1440Rows():
         deleteFirstAndSecondRows()
 
-    nowstr = now.strftime('%Y-%m-%d %H:%M:%S')
+    nowstr = s.now.strftime('%Y-%m-%d %H:%M:%S')
 
     # XXXXXXXXXX
     sheetName = '温度と湿度'
-    rangeName = 'A:H'
+    rangeName = 'A:I'
     ValueInputOption = 'USER_ENTERED'
     body = {
-        'values': [[nowstr, humidity, temperature, max_range_temperature, min_range_temperature, max_range_humidity, min_range_humidity, pressure, co2]],
+        'values': [[nowstr, s.humidity, s.temperature, s.max_range_temperature, s.min_range_temperature, s.max_range_humidity, s.min_range_humidity, s.pressure, s.co2, s.max_range_co2]],
     }
     result = getService().spreadsheets().values().append(
         spreadsheetId=spreadsheetId, range=sheetName + "!" + rangeName,
