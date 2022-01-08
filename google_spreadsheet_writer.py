@@ -38,18 +38,18 @@ def isOver1440Rows():
     response = request.execute()
     if 'values' in response:
         # not value of A1441:A1441
-        print("isOver1440 is True")
-        print(response)
+        # print("isOver1440 is True")
+        # print(response)
         return True
     else:
-        print("isOver1440 is False")
-        print(response)
+        # print("isOver1440 is False")
+        # print(response)
         return False
 
 
 def deleteFirstAndSecondRows():
     # https://developers.google.com/sheets/api/samples/rowcolumn
-    print("deleteFirstAndSecondRows start ")
+    # print("deleteFirstAndSecondRows start ")
 
     # XXXXXXXXXX
     sheetName = '温度と湿度'

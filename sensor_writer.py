@@ -31,6 +31,7 @@ def main():
     co2 = mh_z19b.getCo2()
 
     sensor = sensor_class.Sensor(now, humidity, temperature, pressure, co2)
+    sensor.dump()
 
     writeCsv(sensor)
     google_spreadsheet_writer.write(sensor)
