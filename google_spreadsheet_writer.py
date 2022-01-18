@@ -17,6 +17,7 @@ from __future__ import print_function
 import pickle
 import os.path
 import sensor_class
+import datetime
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -131,6 +132,24 @@ def write(s:sensor_class.Sensor):
 #        for row in values:
 #            # Print columns A and E, which correspond to indices 0 and 4.
 #            print('%s, %s' % (row[0], row[4]))
+
+
+
+def write_for_twitter(follower_count, following_count):
+
+    today = datetime.date.today()
+    yyyymmdd = today.strftime('%Y%m%d')
+
+    sheetName = 'twitter分析'
+    rangeName = 'A:C'
+    ValueInputOption = 'USER_ENTERED'
+    body = {
+        'values': [[yyyymmdd, follower_count, following_count]],
+    }
+    result = getService().spreadsheets().values().append(
+        spreadsheetId=spreadsheetId, range=sheetName + "!" + rangeName,
+        valueInputOption=ValueInputOption, body=body).execute()
+
 
 # if __name__ == '__main__':
     # deleteFirstAndSecondRows()
