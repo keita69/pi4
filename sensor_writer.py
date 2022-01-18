@@ -34,9 +34,10 @@ def main():
     sensor.dump()
 
     writeCsv(sensor)
-    google_spreadsheet_writer.write(sensor)
     line_notify.notify(sensor)
     line_notify.notify_for_co2(sensor)
+    # TODO : if error , notify by line message.
+    google_spreadsheet_writer.write(sensor)
 
 #   disp_oled.disp( now, temperature)
 
