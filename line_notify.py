@@ -3,12 +3,12 @@ import configparser
 import sensor_class
 
 
-def getAccessToken(key):
+def getAccessToken(section):
 
     config = configparser.ConfigParser()
     config.read('secrets.ini')
 
-    access_token = config.get(key, 'access_token')
+    access_token = config.get(section, 'access_token')
     return access_token
 
 
