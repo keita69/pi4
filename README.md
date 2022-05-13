@@ -160,3 +160,6 @@ https://qiita.com/psychoroid/items/2c2acc06c900d2c0c8cb
 
 # 電子工作初心者がRaspberry Pi Zeroに温湿度気圧センサBME280を接続してみた
 https://dev.classmethod.jp/articles/raspberrypi-and-bme280/
+
+# credentials.json 作成
+https://console.cloud.google.com/apis/credentials?project=humsensor-1606088383596
