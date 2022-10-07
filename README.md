@@ -1,4 +1,5 @@
 # pi4
+
 ## Q1
 ```
 root@pi4:/home/pi/git/pi4# bash start_sensor.sh
