@@ -9,6 +9,7 @@ def getCo2():
 
     if not "co2" in out:
        print("Initializing mh_z19.......")
+       print(out)
        time.sleep(10)
 
     co2 = out['co2']

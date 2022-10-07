@@ -1,5 +1,4 @@
 # pi4
-
 ## Q1
 ```
 root@pi4:/home/pi/git/pi4# bash start_sensor.sh
@@ -158,9 +157,3 @@ https://dev.classmethod.jp/articles/raspberry-pi-4-b-mh-z19b-co2/
 # Python Lint  
 https://qiita.com/genbu-jp/items/723b619013dc86008acc
 https://qiita.com/psychoroid/items/2c2acc06c900d2c0c8cb
-
-# 電子工作初心者がRaspberry Pi Zeroに温湿度気圧センサBME280を接続してみた
-https://dev.classmethod.jp/articles/raspberrypi-and-bme280/
-
-# credentials.json 作成
-https://console.cloud.google.com/apis/credentials?project=humsensor-1606088383596

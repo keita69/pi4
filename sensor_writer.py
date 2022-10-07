@@ -29,6 +29,7 @@ def main():
     # --- BME280
     temperature, pressure, humidity = bme280.readData()
     co2 = mh_z19b.getCo2()
+    #co2 = 0
 
     sensor = sensor_class.Sensor(now, humidity, temperature, pressure, co2)
     sensor.dump()
