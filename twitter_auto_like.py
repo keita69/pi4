@@ -1,6 +1,7 @@
 import tweepy
 import configparser
 import time
+import re
 import random
 from pprint import pprint
 
@@ -36,7 +37,11 @@ def ClientInfo():
 search    = "#プログラミング初心者"  # 検索対象
 tweet_max = 10          # 取得したいツイート数(10〜100で設定可能)
 
+#-------------------------------------------------------------------------------- 
 # 関数
+#-------------------------------------------------------------------------------- 
+
+# 検索キーワードをランダム抽出
 def GetRandomSearchWord():
     words = [
         "#プログラミング初心者",
@@ -44,8 +49,32 @@ def GetRandomSearchWord():
         "#プログラミング初心者と繋がりたい",
         "#エンジニアと繋がりたい",
         "#プログラミング独学"]
-    return words[random.randint(0,len(words))]
+    return words[random.randint(0,len(words))-1]
 
+# 対象外キーワード正規表現取得
+def GetIgnoreWordRe():
+    iw = "スクール|塾|相互"
+    return iw
+
+# ツイートidからユーザ情報を取得
+def GetTweet(tweet_id):
+    # メソッド実行
+    GetTwt = ClientInfo().get_tweet(id=int(tweet_id), expansions=["author_id"], user_fields=["username"])
+
+    # 結果加工
+    twt_result = {}
+    twt_result["tweet_id"] = tweet_id
+    twt_result["user_id"]  = GetTwt.includes["users"][0].id
+    twt_result["username"] = GetTwt.includes["users"][0].username
+    twt_result["text"]     = GetTwt.data
+    twt_result["url"]      = "https://twitter.com/" + GetTwt.includes["users"][0].username + "/status/" + str(tweet_id)
+
+
+    # 結果出力
+    return twt_result
+
+
+# ツイート検索
 def SearchTweets(search,tweet_max):    
     # 直近のツイート取得
     tweets = ClientInfo().search_recent_tweets(query = GetRandomSearchWord(), max_results = tweet_max)
@@ -67,19 +96,40 @@ def SearchTweets(search,tweet_max):
     # 結果出力
     return results
 
-
-# 関数情報
+# いいね
 def LikeTweet(tweet_id):
     favo = ClientInfo().like(tweet_id)
     return favo
 
+
+
+#-------------------------------------------------------------------------------- 
+# Main
+#-------------------------------------------------------------------------------- 
+userList = []
+
+# 検索
 results = SearchTweets(search,tweet_max)
-# 関数実行・出力
-# pprint(results)
 
 # いいね
 for result in results:
     # ランダム秒待つ(10～30秒の間で待機する)
     time.sleep(random.randint(10,30))
-    pprint(LikeTweet(result["tweet_id"]))
-random.randint(10,30)
+
+    tweet_id = result["tweet_id"]
+    tweet_text = result["text"]
+
+    user_id = GetTweet(tweet_id)["user_id"]
+
+    if len(re.findall(GetIgnoreWordRe(), tweet_text)) > 0:
+        #print("--[ IGNORE ]-----------")
+        #print(user_id)
+        #print(tweet_text)
+        continue
+
+    if not (user_id in userList):
+        userList.append(user_id)
+        #print("--[ LIKE ]-----------")
+        #print(user_id)
+        #print(tweet_text)
+        pprint(LikeTweet(tweet_id))
