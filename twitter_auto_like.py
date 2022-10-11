@@ -53,7 +53,7 @@ def GetRandomSearchWord():
 
 # 対象外キーワード正規表現取得
 def GetIgnoreWordRe():
-    iw = "スクール|school|塾|相互|無料|突破|Qiitaの良記事|リプ|DM"
+    iw = "スクール|school|塾|相互|無料|突破|Qiitaの良記事|リプ|DM|転職"
     return iw
 
 # ツイートidからユーザ情報を取得
