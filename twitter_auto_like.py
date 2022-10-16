@@ -53,7 +53,7 @@ def GetRandomSearchWord():
 
 # 対象外キーワード正規表現取得
 def GetIgnoreWordRe():
-    iw = "催|公式|稼|アカデミ|スクール|school|塾|相互|無料|突破|Qiitaの良記事|リプ|DM|転職"
+    iw = "会|催|公式|稼|アカデミ|スクール|school|塾|相互|無料|突破|Qiitaの良記事|リプ|DM|転職"
     return iw
 
 # ツイートidからユーザ情報を取得
@@ -122,9 +122,9 @@ for result in results:
     user_id = GetTweet(tweet_id)["user_id"]
 
     if len(re.findall(GetIgnoreWordRe(), tweet_text)) > 0:
-        print("--[ IGNORE ]-----------")
-        print(user_id)
-        print(tweet_text)
+        #print("--[ IGNORE ]-----------")
+        #print(user_id)
+        #print(tweet_text)
         continue
 
     if not (user_id in userList):
