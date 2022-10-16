@@ -34,7 +34,6 @@ def ClientInfo():
     return client
 
 # ★必要情報入力
-search    = "#プログラミング初心者"  # 検索対象
 tweet_max = 15          # 取得したいツイート数(10〜100で設定可能)
 
 #-------------------------------------------------------------------------------- 
@@ -75,7 +74,7 @@ def GetTweet(tweet_id):
 
 
 # ツイート検索
-def SearchTweets(search,tweet_max):    
+def SearchTweets(tweet_max):    
     # 直近のツイート取得
     tweets = ClientInfo().search_recent_tweets(query = GetRandomSearchWord(), max_results = tweet_max)
 
@@ -109,7 +108,7 @@ def LikeTweet(tweet_id):
 userList = []
 
 # 検索
-results = SearchTweets(search,tweet_max)
+results = SearchTweets(tweet_max)
 
 # いいね
 for result in results:
